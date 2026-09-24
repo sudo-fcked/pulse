@@ -1,0 +1,3 @@
+run_id,model_name,accuracy,precision,recall,auc
+run_001,majority_class,0.65,0.00,0.00,0.50
+run_002,logistic_regression,0.78,0.72,0.65,0.81

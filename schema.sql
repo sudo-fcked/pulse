@@ -11,5 +11,6 @@ CREATE TABLE stop_events (
     actual TIMESTAMP,
     scheduled_headway INT,
     headway INT,
-    half_trip_id VARCHAR(100)
+    half_trip_id VARCHAR(100),
+    source VARCHAR(50)
 );
