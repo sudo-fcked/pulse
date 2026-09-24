@@ -8,21 +8,18 @@ Daily commuters rely on the Pulse app's saved-trip feature to plan their morning
 * **Output:** A probability score representing the likelihood that a given transit trip will experience a delay greater than 3 minutes, evaluated against a tuned decision threshold.
 
 ## 3. Features available at prediction time
-* **Usable Features (Known in advance / derived from schedule):** 
-  * `service_date`, `route_id`, `direction_id`, `stop_id`, `time_point_id`
-  * `time_point_order`, `point_type`, `standard_type`
-  * `scheduled`, `scheduled_headway`
-  * *Derived Features:* Hour of day, day of the week, route-stop interaction flags.
-* **Identifiers (Excluded from features):** `half_trip_id`.
-* **Data Sources:** Historical files for training pipelines; live API lookup records mapped by route, direction, and stop for production serving.
+The thirteen historical data columns are sorted as follows:
+* **Known before the bus runs (Usable Features):** `service_date`, `route_id`, `direction_id`, `stop_id`, `time_point_id`, `time_point_order`, `point_type`, `standard_type`, `scheduled`, `scheduled_headway`, and derived features (such as hour and day of week). 
+* **Identifiers (Excluded as features):** `half_trip_id`.
+* **Known only after the bus runs (Excluded from features):** `actual` and `headway`.
+* **Sources:** Historical files for training; live API lookups mapped by route, direction, and stop for production serving.
 
 ## 4. Label source
 * **Source:** Historical MBTA arrival files.
-* **Calculation:** Derived by subtracting the `scheduled` timestamp from the `actual` timestamp.
-* **Data Cleaning Intent:** Rows lacking an `actual` timestamp (indicating cancellations or system tracking gaps) and extreme outlier delays will be measured, filtered, or explicitly categorized during Task 2 database ingestion.
+* **Calculation:** Derived by subtracting the `scheduled` timestamp from the `actual` timestamp for every row that contains an `actual` timestamp. Rows missing `actual` or showing extreme outlier delays will be filtered or categorized during Task 2.
 
 ## 5. Metrics, baseline, and target
-* **Baseline Strategy:** Majority class baseline (predicting the most frequent class, i.e., "on-time").
+* **Baseline Strategy:** Majority class baseline evaluated on later weeks.
 * **Primary Metric:** **Precision** over recall. 
 * **Cost Trade-off:** A false "reliable" prediction (telling a rider a bus will be on time when it actually runs late) is the most expensive mistake because it burns user trust. The decision threshold will be adjusted to favor precision and minimize false negatives for delays, accepting a controlled rate of false alarms.
 
