@@ -1,0 +1,13 @@
+model_type: majority_class
+features:
+  - route_id
+  - direction_id
+  - stop_id
+  - time_point_id
+  - time_point_order
+  - point_type
+  - standard_type
+  - scheduled_headway
+  - day_of_week
+  - hour
+  - minute_of_day

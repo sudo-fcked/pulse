@@ -1,1 +1,12 @@
 mlruns/
+!data/**/
+!data/**/*.dvc
+mlruns/
+mlflow.db
+pull_daily.log
+data/**
+!data/**/
+!data/**/*.dvc
+mlruns/
+mlflow.db
+pull_daily.log
