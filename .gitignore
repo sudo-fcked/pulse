@@ -1,12 +1,12 @@
-mlruns/
-!data/**/
-!data/**/*.dvc
-mlruns/
-mlflow.db
-pull_daily.log
+# Ignore data contents but keep directory structure and .dvc pointer files
 data/**
 !data/**/
 !data/**/*.dvc
+
+# Local run stores and caches
 mlruns/
 mlflow.db
 pull_daily.log
+__pycache__/
+*.pyc
+.ipynb_checkpoints/
