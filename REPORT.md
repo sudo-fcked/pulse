@@ -67,3 +67,21 @@
   - **At 0.50 (Default):** Precision is 0.6189, Recall is 0.5915. This is too conservative, missing over 40% of all delayed buses.
   - **At 0.45:** Precision is 0.5887, Recall is 0.6842. A balanced middle-ground, but it still fails to warn riders of nearly a third of all delays.
   - **At 0.40 (Recommended):** Precision drops slightly to 0.5577, but Recall jumps to 0.7701. We capture the vast majority of delays while maintaining enough precision that our warnings remain trustworthy (accurate over 55% of the time).
+
+## 6. Reproducibility
+- **Git commit, DVC versions, MLflow experiment name, registered model version:**
+  - **Git commit:** `e1f14f7e05d758c3c0e05234f8de132eebed1123`
+  - **DVC versions:** Tracked via `train.parquet.dvc`, `val.parquet.dvc`, `test.parquet.dvc` (MD5 hashes verified in Section 1).
+  - **MLflow experiment:** `pulse_models`
+  - **Registered model:** `hist_gradient_boosting_v1`
+- **Exact command(s) to reproduce the winning run:**
+  - Training pipeline: `python3 src/train_tree.py`
+  - Final evaluation: `python3 src/evaluate.py`
+  - Threshold sweep: `python3 src/sweep_thresholds.py`
+
+## 7. Limitations & Next Steps
+- **What the model can't do; what you'd try with more time:**
+  - **Limitations:** This model is grounded entirely in static schedules and cyclic historical timeframes. It is fundamentally blind to dynamic, real-world anomalies such as active traffic accidents, sudden severe weather events, road closures, or mechanical bus breakdowns. 
+  - **Next Steps:** Given more time, injecting external APIs for live weather telemetry, real-time traffic density, and integrating spatial route mapping to identify geographical choke points would significantly elevate the model's predictive ceiling.
+- **How would the picture change if "late" meant five minutes instead of three? Argue it qualitatively:**
+  - Shifting the target definition from >3 minutes to >5 minutes would drastically alter the class distribution, making "late" a much rarer event. The baseline late rate would plummet, leading to a highly imbalanced dataset. While the model's overall accuracy would likely inflate artificially (simply by predicting the new dominant "on-time" majority class), maintaining high Recall would become significantly harder. Delays of 5+ minutes are much more likely to be caused by the unpredictable real-time anomalies (crashes, weather) that this dataset currently lacks, rather than the predictable daily cyclic traffic patterns the tree model currently exploits.
