@@ -1,0 +1,20 @@
+model_type: hist_gradient_boosting
+max_iter: 200
+learning_rate: 0.05
+max_leaf_nodes: 63
+features:
+  - route_id
+  - direction_id
+  - stop_id
+  - time_point_id
+  - time_point_order
+  - point_type
+  - standard_type
+  - scheduled_headway
+  - day_of_week
+  - hour
+  - minute_of_day
+  - hour_sin
+  - hour_cos
+  - dow_sin
+  - dow_cos
