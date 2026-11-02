@@ -1,0 +1,9 @@
+experiment_name: "pulse-latenet"
+run_name: "latenet_lr0005"
+batch_size: 256
+lr: 0.0005
+hidden_dim: 128
+dropout: 0.2
+embedding_dim: 16
+epochs: 20
+patience: 3
