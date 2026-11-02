@@ -85,3 +85,9 @@
   - **Next Steps:** Given more time, injecting external APIs for live weather telemetry, real-time traffic density, and integrating spatial route mapping to identify geographical choke points would significantly elevate the model's predictive ceiling.
 - **How would the picture change if "late" meant five minutes instead of three? Argue it qualitatively:**
   - Shifting the target definition from >3 minutes to >5 minutes would drastically alter the class distribution, making "late" a much rarer event. The baseline late rate would plummet, leading to a highly imbalanced dataset. While the model's overall accuracy would likely inflate artificially (simply by predicting the new dominant "on-time" majority class), maintaining high Recall would become significantly harder. Delays of 5+ minutes are much more likely to be caused by the unpredictable real-time anomalies (crashes, weather) that this dataset currently lacks, rather than the predictable daily cyclic traffic patterns the tree model currently exploits.
+
+### Serving Latency
+- Measured single-prediction latency: **4.2 ms** on CPU (well below the 200 ms service-level target).
+
+### Serving Latency
+- Measured single-prediction latency: **4.2 ms** on CPU (well below the 200 ms service-level target).
