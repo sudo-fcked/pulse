@@ -10,3 +10,9 @@ pull_daily.log
 __pycache__/
 *.pyc
 .ipynb_checkpoints/
+
+# OpenTofu / Terraform local files
+.terraform/
+.terraform.lock.hcl
+*.tfstate
+*.tfstate.*
