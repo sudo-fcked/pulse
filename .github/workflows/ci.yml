@@ -27,7 +27,25 @@ jobs:
       - name: Generate Valid Model Checkpoint for Tests
         run: |
           mkdir -p models
-          python3 -c "import torch; from src.app import LateNet; m = LateNet(); torch.save({'model_state_dict': m.state_dict(), 'config': {'embedding_dim': 32, 'hidden_dim': 256}}, 'models/latenet.pt')" 2>/dev/null || python3 -c "import torch; torch.save({'state': {}}, 'models/latenet.pt')"
+          python3 -c "
+          import torch
+          dummy_state = {
+              'route_embed.weight': torch.randn(10, 32),
+              'stop_embed.weight': torch.randn(100, 32),
+              'fc1.weight': torch.randn(64, 96),
+              'fc1.bias': torch.randn(64),
+              'fc2.weight': torch.randn(1, 64),
+              'fc2.bias': torch.randn(1)
+          }
+          torch.save({
+              'model_state_dict': dummy_state,
+              'config': {
+                  'embedding_dim': 32,
+                  'hidden_dim': 64
+              }
+          }, 'models/latenet.pt')
+          print('Successfully generated valid mock checkpoint.')
+          "
 
       - name: Lint with Flake8
         run: |
